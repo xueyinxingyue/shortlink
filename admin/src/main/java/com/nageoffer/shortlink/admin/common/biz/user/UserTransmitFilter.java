@@ -3,6 +3,7 @@ package com.nageoffer.shortlink.admin.common.biz.user;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
 import com.google.common.collect.Lists;
+import com.nageoffer.shortlink.admin.common.constant.RedisCacheConstant;
 import com.nageoffer.shortlink.admin.common.convention.exception.ClientException;
 import com.nageoffer.shortlink.admin.common.convention.result.Results;
 import jakarta.servlet.*;
@@ -48,7 +49,7 @@ public class UserTransmitFilter implements Filter {
                 }
                 Object userInfoJsonStr;
                 try {
-                    userInfoJsonStr = stringRedisTemplate.opsForHash().get("login_" + username, token);
+                    userInfoJsonStr = stringRedisTemplate.opsForHash().get(RedisCacheConstant.USER_LOGIN_KEY + username, token);
                     if (userInfoJsonStr == null) {
                         throw new ClientException(USER_TOKEN_FAIL);
                     }
